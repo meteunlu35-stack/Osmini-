@@ -1,0 +1,14 @@
+name: ISO Yap
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y genisoimage unzip
+      - run: unzip -o minios-os.zip || true
+      - run: genisoimage -o MiniOS.iso -V MiniOS -R -J.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MiniOS-ISO
+          path: MiniOS.iso
